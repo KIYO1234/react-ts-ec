@@ -22,7 +22,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { fetchThunk } from '../features/items/itemSlice'
+import { fetchThunk, ItemState } from '../features/items/itemSlice'
 import Loading from '../components/Loading'
 
 const useStyles = makeStyles(theme => ({
@@ -108,23 +108,32 @@ const Details: React.FC = () => {
     useEffect(() => {
         dispatch(fetchThunk())
     }, [dispatch])
-    let items = useAppSelector(state => state.items.items)
+    let items:ItemState['items'] = useAppSelector(state => state.items.items)
     const classes = useStyles()
-    const {id}: any = useParams()
-    const index = items.findIndex(item => item.id === Number(id))
-    let chosen = items[index]
+    const {id} = useParams<{id: string}>()
+    type Item = {
+        id: number,
+        name: string,
+        desc: string,
+        priceM: number,
+        priceL: number,
+        url: string,
+        selectedSize?: string | null
+        price?: number
+    }
+    const index:number = items.findIndex(item => item.id === Number(id))
+    let chosen:Item = items[index]
     const history = useHistory()
     const link = (path:string) => {
         history.push(path)
     }
-    const [{size, price}, setSizeAndPrice] = useState({size: 'M', price: 0})
+    const [{size, price}, setSizeAndPrice] = useState<{size: string, price: number}>({size: 'M', price: 0})
     const handleChangeSizeAndPrice = (e: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>): void => {
         if(e.target.value === 'M'){
             setSizeAndPrice({size: e.target.value, price: chosen.priceM})            
         } else if (e.target.value === 'L') {
             setSizeAndPrice({size: e.target.value, price: chosen.priceL})
         }
-        
     }
         
     // トッピング    
@@ -132,7 +141,7 @@ const Details: React.FC = () => {
     
     // トッピング画面のtoggle
     const [expanded, setExpanded] = React.useState<boolean>(false)
-    const handleExpandClick = () => {
+    const handleExpandClick = ():void => {
         setExpanded(!expanded)
     }
     
@@ -145,7 +154,6 @@ const Details: React.FC = () => {
     // トッピング
     const[topping, setTopping] = React.useState<any>([])
     const handleTopping = (e:any) :void => {
-        
         const includeL = e.target.value.indexOf('L')
         const includeM = e.target.value.indexOf('M')
         
@@ -164,21 +172,18 @@ const Details: React.FC = () => {
                 toppingPrice: 200,
                 toppingSize: e.target.title
             }
-            let result = topping.filter(((element: selectedTopping, index: number,self: any) => self.findIndex((e:any) => e.toppingName === element.toppingName) === index))    
+            let result = topping.filter(((element: selectedTopping, index: number,self: []) => self.findIndex((e:any) => e.toppingName === element.toppingName) === index))    
             setTopping([t, ...result])
         } else {
-            let index = topping.findIndex((item: selectedTopping) => item.toppingName === e.target.ariaLabel)
-            let deletedTopping = topping
+            let index:number = topping.findIndex((item: selectedTopping) => item.toppingName === e.target.ariaLabel)
+            let deletedTopping:selectedTopping[] = topping
             deletedTopping.splice(index, 1)
         }
     }
     
     // 個数
     const [quantity, setQuantity] = useState(1)
-    const handleQuantity = (e:any): void => {
-        setQuantity(e.target.value)
-        console.log(quantity)
-    }
+    const handleQuantity = (e:any): void => setQuantity(e.target.value)
     
     if(chosen) {
         return (

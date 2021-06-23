@@ -81,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProductList: React.FC = () => {
-    let items = useSelector(itemList)
+    let items:ItemState['items'] = useSelector(itemList)
     const dispatch = useAppDispatch()
     const classes = useStyles()
     useEffect(() => {
@@ -104,8 +104,8 @@ const ProductList: React.FC = () => {
         setSearchWord(e.target.value)
     }
    
-    const search = () => {
-        const list = items.filter(item => item.name.indexOf(searchWord) !== -1 )
+    const search = ():void => {
+        const list:ItemState['items'] = items.filter(item => item.name.indexOf(searchWord) !== -1 )
         setShowingItems(list)
     }
 

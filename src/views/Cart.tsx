@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import { deleteFromCart } from '../features/users/userSlice'
+import { deleteFromCart, UserState } from '../features/users/userSlice'
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -112,19 +112,20 @@ const useStyles = makeStyles(theme => ({
 
 const Cart: React.FC = () => {
     const dispatch = useAppDispatch()
-    const isSignedIn = useAppSelector(state => state.user.userInfo.isSignedIn)    
+    const isSignedIn:boolean = useAppSelector(state => state.user.userInfo.isSignedIn)    
     const classes = useStyles()
-    const cart = useAppSelector(state => state.user.cart)
+    const cart:UserState['cart'] = useAppSelector(state => state.user.cart)
     
     // 合計金額
-    const totalPrice = cart.map(item => item.price * item.quantity + item.toppingTotal)    
-    const finalPrice = totalPrice.reduce((a:number, b:number) => a + b, 0)
+    const totalPrice:number[] = cart.map(item => item.price * item.quantity + item.toppingTotal)    
+    
+    const finalPrice:number = totalPrice.reduce((a:number, b:number) => a + b, 0)
     const history = useHistory()
-    const link = (path: string) => {
+    const link = (path: string):void => {
         history.push(path)
     }
 
-    const local = async(path: string) => {
+    const local = async(path: string):Promise<void> => {
         if(isSignedIn){
             history.push(path)
         } else {

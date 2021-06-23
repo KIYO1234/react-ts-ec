@@ -15,10 +15,10 @@ const useStyles = makeStyles(theme => ({
   }
 
 }))
-const OrderFinished = () => {
+const OrderFinished:React.FC = () => {
     const classes = useStyles()
     const history = useHistory()
-    const link = (path: string) => {
+    const link = (path: string):void => {
         history.push(path)
     }
     return (

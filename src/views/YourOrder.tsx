@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import PrimaryBtn from '../components/PrimaryBtn'
 import { Typography } from "@material-ui/core"
 import { useHistory } from "react-router-dom";
-import { fetchHistory, cancelOrder } from '../features/users/userSlice';
+import { UserState, fetchHistory, cancelOrder } from '../features/users/userSlice';
 import Loading from '../components/Loading';
 
 const useStyles = makeStyles(theme => ({
@@ -117,11 +117,11 @@ const useStyles = makeStyles(theme => ({
 
 const YourOrder: React.FC = () => {
     const classes = useStyles()
-    const yourOrder = useAppSelector(state => state.user.history)
+    const yourOrder:UserState['history'] = useAppSelector(state => state.user.history)
     const param = useParams<{orderId: string}>()
-    const filteredYourOrder = yourOrder.filter(a => a.orderId === param.orderId)
+    const filteredYourOrder:UserState['history'] = yourOrder.filter(a => a.orderId === param.orderId)
     const order = filteredYourOrder[0]
-    const uid = useAppSelector(state => state.user.userInfo.uid)
+    const uid:string | undefined = useAppSelector(state => state.user.userInfo.uid)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

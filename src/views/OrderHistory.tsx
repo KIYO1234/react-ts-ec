@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
-import { fetchHistory } from '../features/users/userSlice'
+import { UserState, fetchHistory } from '../features/users/userSlice'
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
@@ -72,10 +72,10 @@ const useStyles = makeStyles(theme => ({
 const OrderHistory:React.FC = () => {
     const classes = useStyles()
     const dispatch = useAppDispatch()
-    const uid = useAppSelector(state => state.user.userInfo.uid)
-    const history = useAppSelector(state => state.user.history)
-    const userCart = history.map(item => item.userCart)
-    const order = userCart.map(order => order.map(o => o.topping.map(i => i.toppingPrice)))
+    const uid:string | undefined = useAppSelector(state => state.user.userInfo.uid)
+    const history:UserState['history'] = useAppSelector(state => state.user.history)
+    const userCart:UserState['cart'][] = history.map(item => item.userCart)
+    const order:number[][][] = userCart.map(order => order.map(o => o.topping.map(i => i.toppingPrice)))
     const prices = []
     for(let i = 0; i < order.length; i++){
         prices.push(order[i])

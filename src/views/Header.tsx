@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { UserState } from '../features/users/userSlice'
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar';
@@ -81,15 +82,15 @@ const Header: React.FC = () => {
     const link = (path: string) => {
         history.push(path)
     }
-    const user = useAppSelector(state => state.user)
+    const user:UserState = useAppSelector(state => state.user)
     const dispatch = useAppDispatch()
     const classes = useStyles();
-    const login = async () => {
+    const login = async ():Promise<void> => {
         const google_auth_provider = new firebase.auth.GoogleAuthProvider();
         await firebase.auth().signInWithRedirect(google_auth_provider);
         alert('ログインしました')
     }
-    const logout = () => {
+    const logout = ():void => {
       if(window.confirm('ログアウトしますか？')){
         firebase.auth().signOut()
         dispatch(deleteUser())
@@ -99,7 +100,7 @@ const Header: React.FC = () => {
         alert('ログアウトがキャンセルされました')
       } 
     }
-    const cart = useAppSelector(state => state.user.cart)
+    const cart:UserState['cart'] = useAppSelector(state => state.user.cart)
     const [open, setOpen] = useState<boolean>(false)
     const handleDrawerOpen = ():void => {
       setOpen(true)

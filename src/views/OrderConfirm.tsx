@@ -1,6 +1,6 @@
 import React, { useState} from 'react'
 import { useAppSelector, useAppDispatch } from '../app/hooks'
-import {  asyncOrder, orderType, carts } from '../features/users/userSlice'
+import {  asyncOrder, orderType, carts, UserState } from '../features/users/userSlice'
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -157,18 +157,18 @@ const useStyles = makeStyles(theme => ({
 const Cart: React.FC = () => {    
     const dispatch = useAppDispatch()
     const classes = useStyles()
-    const cart = useAppSelector(state => state.user.cart)
-    const totalPrice = cart.map(item => item.price * item.quantity + item.toppingTotal)
-    const orderTotalPrice = totalPrice.reduce((a:number, b:number) => a + b, 0)
+    const cart:UserState['cart'] = useAppSelector(state => state.user.cart)
+    const totalPrice:number[] = cart.map(item => item.price * item.quantity + item.toppingTotal)
+    const orderTotalPrice:number = totalPrice.reduce((a:number, b:number) => a + b, 0)
     const history = useHistory()
-    const link = (path: string) => {
+    const link = (path: string):void => {
         history.push(path)
     }
     const { register, handleSubmit, formState: {errors} } = useForm()
-    const uid = useAppSelector(state => state.user.userInfo.uid)
+    const uid:string | undefined = useAppSelector(state => state.user.userInfo.uid)
 
     const onSubmit = (data: orderType):void => {
-        const date = new Date().toLocaleDateString()
+        const date:string = new Date().toLocaleDateString()
      if(window.confirm('この内容で注文してよろしいですか？')){
          dispatch(asyncOrder(
              {userOrderInfo: {
