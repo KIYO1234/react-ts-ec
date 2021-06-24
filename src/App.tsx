@@ -4,8 +4,20 @@ import { useAppSelector, useAppDispatch } from './app/hooks';
 import { fetchCart, setUser, fetchToppings, fetchHistory, CartItem, noLoginCartAdd, UserState } from './features/users/userSlice'
 import firebase from 'firebase'
 import { fetchThunk } from './features/items/itemSlice'
+import RenderInput from './Test/RenderInput';
+import FrameworkList from './Test/FrameworkList';
+import UseEffectRender from './Test/UseEffectRender';
 
 const App: React.FC = () => {
+  // テスト用ダミーデータ------------------------
+    const data = [
+      {id: 1, item: 'React'},
+      {id: 2, item: 'Angular'},
+      {id: 3, item: 'Vue'},
+    ]
+
+ // -----------------------------------------------
+
   const userInfo:UserState['userInfo'] = useAppSelector(state => state.user.userInfo)
   const isSignedIn = useAppSelector(state => state.user.userInfo.isSignedIn)
   const uid = useAppSelector(state => state.user.userInfo.uid)
@@ -49,6 +61,10 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Router/>
+      <RenderInput outputConsole={console.log}/>
+      <FrameworkList frameworks={data}/>
+      {/* <FrameworkList /> */}
+      <UseEffectRender />
     </div>
   );
 }

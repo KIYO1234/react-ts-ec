@@ -22,7 +22,7 @@ export interface UserState {
             toppingName: string;    
             toppingSize: string;
             toppingPrice: number;
-            toppingId?: any
+            toppingId: string | undefined
         }[];
         priceM: number;
         priceL: number;
@@ -61,7 +61,7 @@ export interface UserState {
                 toppingName: string;    
                 toppingSize: string;
                 toppingPrice: number;
-                toppingId?: any
+                toppingId: string | undefined
             }[];
             url: string;
             toppingTotal: number
@@ -121,7 +121,7 @@ export interface CartItem {
         toppingName: string;
         toppingSize: string;
         toppingPrice: number;
-        toppingId: any
+        toppingId: string | undefined
     }[];
     priceM: number;
     priceL: number;
@@ -174,7 +174,7 @@ export const fetchHistory = createAsyncThunk(
                     toppingName: string;    
                     toppingSize: string;
                     toppingPrice: number;
-                    toppingId?: any
+                    toppingId: string | undefined
                 }[];
                 url: string;  
                 toppingTotal: number;
@@ -214,7 +214,7 @@ export const asyncOrder = createAsyncThunk(
             orderInfo.userOrderInfo.orderTime = 1
         }
         await firebase.firestore().collection(`users/${orderInfo.uid}/orders`).add(orderInfo)
-        const cartIds:any = []
+        const cartIds:string[] = []
         orderInfo.userCart.forEach((item: any) => cartIds.push(item.cartId))
         const cartAfterAdd:any = []
         await firebase.firestore().collection(`users/${orderInfo.uid}/cart`).get().then(snapshot => snapshot.forEach(doc => cartAfterAdd.push({...doc.data(), cartId: doc.id})))
