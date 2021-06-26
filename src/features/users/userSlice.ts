@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import {RootState} from '../../app/store'
 import firebase from 'firebase'
 
@@ -225,12 +225,28 @@ export const asyncOrder = createAsyncThunk(
         return orderInfo
     }
 )
+type Chosen = {
+    chosen: {
+        desc: string,
+        id: number,
+        name: string,
+        priceL: number,
+        priceM: number,
+        url: string,
+    },
+    price: number,
+    quantity: number,
+    size: string,
+    topping: []
+}
 
 export const userSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        addToCart: (state, action) => {
+        addToCart: (state, action:PayloadAction<Chosen>) => {
+            console.log(action.payload)
+            
             if(action.payload.topping.length >= 2){
                 const filteredTopping:any = action.payload.topping.filter(function(element:any, i: number, self: any){
                     return(self.findIndex(function(n:any){

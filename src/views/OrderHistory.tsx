@@ -85,9 +85,9 @@ const OrderHistory:React.FC = () => {
         historyLink.push(id)
     }
     
-    useEffect(() => {
-        dispatch(fetchHistory(uid))
-    },[dispatch, uid])
+    // useEffect(() => {
+    //     dispatch(fetchHistory(uid))
+    // },[dispatch, uid])
 
     if(history.length > 0){
         return (

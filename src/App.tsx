@@ -7,6 +7,10 @@ import { fetchThunk } from './features/items/itemSlice'
 import RenderInput from './Test/RenderInput';
 import FrameworkList from './Test/FrameworkList';
 import UseEffectRender from './Test/UseEffectRender';
+import MockServer from './Test/MockServer';
+import Redux from './views/Redux';
+import ReduxAsync from './views/ReduxAsync';
+import CustomHooks from './views/CustomHooks';
 
 const App: React.FC = () => {
   // テスト用ダミーデータ------------------------
@@ -61,10 +65,14 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Router/>
-      <RenderInput outputConsole={console.log}/>
-      <FrameworkList frameworks={data}/>
+      {/* <RenderInput outputConsole={console.log}/> */}
+      {/* <FrameworkList frameworks={data}/> */}
       {/* <FrameworkList /> */}
-      <UseEffectRender />
+      {/* <UseEffectRender /> */}
+      {/* <MockServer /> */}
+      <ReduxAsync />
+      <CustomHooks />
+      {/* <Redux /> */}
     </div>
   );
 }
