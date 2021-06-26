@@ -7,7 +7,7 @@ import OrderHistory from './views/OrderHistory'
 import YourOrder from './views/YourOrder'
 import Header from './views/Header'
 import OrderFinished from './views/OrderFinished'
-import Hoge from './Test/Hoge'
+import Hoge from './SampleTest/Hoge'
 
 const Router = () => {
     return (

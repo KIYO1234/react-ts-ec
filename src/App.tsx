@@ -4,9 +4,9 @@ import { useAppSelector, useAppDispatch } from './app/hooks';
 import { fetchCart, setUser, fetchToppings, fetchHistory, CartItem, noLoginCartAdd, UserState } from './features/users/userSlice'
 import firebase from 'firebase'
 import { fetchThunk } from './features/items/itemSlice'
-import RenderInput from './Test/RenderInput';
-import FrameworkList from './Test/FrameworkList';
-import UseEffectRender from './Test/UseEffectRender';
+import RenderInput from './SampleTest/RenderInput';
+import FrameworkList from './SampleTest/FrameworkList';
+import UseEffectRender from './SampleTest/UseEffectRender';
 
 const App: React.FC = () => {
   // テスト用ダミーデータ------------------------
