@@ -8,6 +8,8 @@ import firebase from 'firebase'
 import { store } from './app/store'
 import { Provider } from 'react-redux'
 
+// 練習用サーバー
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 var firebaseConfig = {
@@ -36,5 +38,8 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// firebaseのモック用に追記
+export default firebase
 
 

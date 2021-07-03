@@ -166,7 +166,11 @@ const Header: React.FC = () => {
 
           <Hidden xsDown>
             {user.userInfo.isSignedIn ? 
-              <Typography variant="h6" className={classes.title}>
+              <Typography 
+                variant="h6" 
+                className={classes.title}
+                data-testid='login'
+              >
                   <div>Welcome!</div>
                   <div>{user.userInfo.displayName}</div>
               </Typography>
@@ -200,9 +204,17 @@ const Header: React.FC = () => {
           </Hidden>
           <Typography className={classes.right}>
             {!user.userInfo.isSignedIn ?
-              <PrimaryBtn label='Login' onClick={login}></PrimaryBtn >
+              <PrimaryBtn 
+                label='Login' 
+                onClick={login}
+                data-testid='loginBtn'
+              ></PrimaryBtn >
               :
-              <PrimaryBtn  label='Logout' onClick={logout}></PrimaryBtn >
+              <PrimaryBtn  
+                label='Logout' 
+                onClick={logout}
+                data-testid='logoutBtn'
+              ></PrimaryBtn >
             }
           </Typography>
         </Toolbar>

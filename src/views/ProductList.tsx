@@ -84,6 +84,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// function sum (a:number, b:number):number {
+//     return a * b;
+// };
+// module.exports = sum;
+export const sum = (a:number, b:number):number => {
+    return a * b;
+};
+
 const ProductList: React.FC = () => {
     let items:ItemState['items'] = useSelector(itemList)
     const dispatch = useAppDispatch()
@@ -139,6 +147,9 @@ const ProductList: React.FC = () => {
                     <CreateIcon />
                 </IconButton>
             </div>
+            <form action="/api/v1">
+                <button type='submit'>送信</button>
+            </form>
             {showingItems.length > 0 && 
                 <Grid 
                 container 
