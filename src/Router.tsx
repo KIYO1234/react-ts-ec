@@ -7,6 +7,7 @@ import OrderHistory from './views/OrderHistory'
 import YourOrder from './views/YourOrder'
 import Header from './views/Header'
 import OrderFinished from './views/OrderFinished'
+import Hoge from './Test/Hoge'
 
 const Router = () => {
     return (
@@ -14,6 +15,7 @@ const Router = () => {
         <BrowserRouter>
             <Header/>
             <Switch>
+                <Route path={'/hoge'} component={Hoge}></Route>
                 <Route path={'/order/finished'} component={OrderFinished}></Route>
                 <Route path={'/your-order/:orderId'} component={YourOrder}></Route>
                 <Route path={'/order/history'} component={OrderHistory}></Route>

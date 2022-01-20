@@ -143,7 +143,7 @@ const Cart: React.FC = () => {
                 :
                 <div className={classes.cartTitle}>
                 <div>ショッピングカート</div>
-                {cart.map((item, index: any) => 
+                {cart.map((item, index:number) => 
                     <Card 
                         key={index}
                         className={classes.card} 

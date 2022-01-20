@@ -14,6 +14,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import ClearIcon from '@material-ui/icons/Clear';
+import CreateIcon from '@material-ui/icons/Create';
 
 
 const useStyles = makeStyles(theme => ({
@@ -78,6 +79,9 @@ const useStyles = makeStyles(theme => ({
   icon: {
       padding: 5,
   },
+  pen: {
+      textAlign: 'right',
+  },
 }));
 
 const ProductList: React.FC = () => {
@@ -129,7 +133,11 @@ const ProductList: React.FC = () => {
                 <IconButton onClick={() => clear()} className={classes.icon}>
                     <ClearIcon/>
                 </IconButton>
-                
+            </div>
+            <div className={classes.pen}>
+                <IconButton onClick={() => link('/hoge')}>
+                    <CreateIcon />
+                </IconButton>
             </div>
             {showingItems.length > 0 && 
                 <Grid 

@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import {RootState} from '../../app/store'
 import firebase from 'firebase'
 
@@ -22,7 +22,7 @@ export interface UserState {
             toppingName: string;    
             toppingSize: string;
             toppingPrice: number;
-            toppingId?: any
+            toppingId: string | undefined
         }[];
         priceM: number;
         priceL: number;
@@ -61,7 +61,7 @@ export interface UserState {
                 toppingName: string;    
                 toppingSize: string;
                 toppingPrice: number;
-                toppingId?: any
+                toppingId: string | undefined
             }[];
             url: string;
             toppingTotal: number
@@ -121,7 +121,7 @@ export interface CartItem {
         toppingName: string;
         toppingSize: string;
         toppingPrice: number;
-        toppingId: any
+        toppingId: string | undefined
     }[];
     priceM: number;
     priceL: number;
@@ -174,7 +174,7 @@ export const fetchHistory = createAsyncThunk(
                     toppingName: string;    
                     toppingSize: string;
                     toppingPrice: number;
-                    toppingId?: any
+                    toppingId: string | undefined
                 }[];
                 url: string;  
                 toppingTotal: number;
@@ -214,7 +214,7 @@ export const asyncOrder = createAsyncThunk(
             orderInfo.userOrderInfo.orderTime = 1
         }
         await firebase.firestore().collection(`users/${orderInfo.uid}/orders`).add(orderInfo)
-        const cartIds:any = []
+        const cartIds:string[] = []
         orderInfo.userCart.forEach((item: any) => cartIds.push(item.cartId))
         const cartAfterAdd:any = []
         await firebase.firestore().collection(`users/${orderInfo.uid}/cart`).get().then(snapshot => snapshot.forEach(doc => cartAfterAdd.push({...doc.data(), cartId: doc.id})))
@@ -225,12 +225,28 @@ export const asyncOrder = createAsyncThunk(
         return orderInfo
     }
 )
+type Chosen = {
+    chosen: {
+        desc: string,
+        id: number,
+        name: string,
+        priceL: number,
+        priceM: number,
+        url: string,
+    },
+    price: number,
+    quantity: number,
+    size: string,
+    topping: []
+}
 
 export const userSlice = createSlice({
     name: 'users',
     initialState,
     reducers: {
-        addToCart: (state, action) => {
+        addToCart: (state, action:PayloadAction<Chosen>) => {
+            console.log(action.payload)
+            
             if(action.payload.topping.length >= 2){
                 const filteredTopping:any = action.payload.topping.filter(function(element:any, i: number, self: any){
                     return(self.findIndex(function(n:any){
